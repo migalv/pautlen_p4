@@ -1,0 +1,33 @@
+bloque: condicional
+		| bucle ;
+
+asignacion:	identificador TOK_IGUAL exp
+			| elemento_vector TOK_IGUAL exp ;
+
+elemento_vector:    identificador TOK_CORCHETEIZQUIERDO exp TOK_CORCHETEDERECHO ;
+
+condicional:  TOK_IF TOK_PARENTESISIZQUIERDO exp TOK_PARENTESISDERECHO TOK_LLAVEIZQUIERDA sentencias TOK_LLAVEDERECHA
+			| TOK_IF TOK_PARENTESISIZQUIERDO exp TOK PARENTESISDERECHO TOK_LLAVEIZQUIERDA sentencias TOK_LLAVEDERECHA TOK_ELSE TOK_LLAVEIZQUIERDA sentencias TOK_LLAVEDERECHA ;
+
+bucle: TOK_WHILE TOK_PARENTESISIZQUIERDO exp TOK_PARENTESISDERECHO TOK_LLAVEIZQUIERDA sentencias TOK_LLAVEDERECHA ;
+
+lectura: TOK_SCANF identificador ;
+
+escritura: TOK_PRINTF exp ;
+
+retorno_funcion: TOK_RETURN exp ;
+
+exp:  exp TOK_MAS exp
+	| exp TOK_MENOS exp
+	| exp TOK_DIVISION exp
+	| exp TOK_ASTERISCO exp
+	| TOK_MENOS exp
+	| exp TOK_AND exp
+	| exp TOK_OR exp
+	| TOK_NOT exp
+	| identificador
+	| constante
+	| TOK_PARENTESISIZQUIERDO exp TOK_PARENTESISDERECHO
+	| TOK_PARENTESISIZQUIERDO comparacion TOK_PARENTESISDERECHO
+	| elemento_vector
+	| identificador TOK_PARENTESISIZQUIERDO lista_expresiones TOK_PARENTESISDERECHO

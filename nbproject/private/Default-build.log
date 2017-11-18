@@ -1,0 +1,6 @@
+bison -dyv alfa.y
+gcc -ansi -pedantic -g -c y.tab.c
+flex alfa.l
+gcc -ansi -pedantic -g -c lex.yy.c
+gcc -ansi -pedantic -g -c prueba_sintactico.c
+gcc -ansi -pedantic -g -Wall -o pruebaSintactico prueba_sintactico.o lex.yy.o y.tab.o

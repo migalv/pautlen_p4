@@ -1,0 +1,17 @@
+;D:	main
+;D:	{
+;D:	int
+Ha traducido la primera linea
+Ha traducido la primera linea
+Ha traducido la primera linea
+;D:	x
+Ha traducido la primera linea
+;D:	,
+;D:	resultado
+Ha traducido la primera linea
+;D:	;
+Ha traducido la primera linea
+Ha traducido la primera linea
+Ha traducido la primera linea
+Ha traducido la primera linea
+Ha traducido la primera linea

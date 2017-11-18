@@ -2,7 +2,7 @@
 /* delimitadores de código C */
 /* Esta seccion suele contener declaradores de variables y funciones que se utilizan posteriormente asi como directivas include */
 #include <stdio.h>
-#include "tokens.h"
+#include "y.tab.h"
 %}
 
 %option noyywrap
@@ -11,53 +11,53 @@
 
 %%
 
-main { return TOK_MAIN; }
-int { return TOK_INT; }
-boolean { return TOK_BOOLEAN; }
-array { return TOK_ARRAY; }
-function { return TOK_FUNCTION; }
-if { return TOK_IF; }
-else { return TOK_ELSE; }
-while { return TOK_WHILE; }
-scanf { return TOK_SCANF; }
-printf { return TOK_PRINTF; }
-return { return TOK_RETURN; }
-true { return TOK_TRUE; }
-false { return TOK_FALSE; }
+main { fprintf(yyout, ";D:\tmain\n"); return TOK_MAIN; }
+int { fprintf(yyout, ";D:\tint\n"); return TOK_INT; }
+boolean { fprintf(yyout, ";D:\tboolean\n"); return TOK_BOOLEAN; }
+array { fprintf(yyout, ";D:\tarray\n"); return TOK_ARRAY; }
+function { fprintf(yyout, ";D:\tfunction\n"); return TOK_FUNCTION; }
+if { fprintf(yyout, ";D:\tif\n"); return TOK_IF; }
+else { fprintf(yyout, ";D:\telse\n"); return TOK_ELSE; }
+while { fprintf(yyout, ";D:\twhile\n"); return TOK_WHILE; }
+scanf { fprintf(yyout, ";D:\tscanf\n"); return TOK_SCANF; }
+printf { fprintf(yyout, ";D:\tprintf\n"); return TOK_PRINTF; }
+return { fprintf(yyout, ";D:\treturn\n"); return TOK_RETURN; }
+true { fprintf(yyout, ";D:\ttrue\n"); return TOK_TRUE; }
+false { fprintf(yyout, ";D:\tfalse\n"); return TOK_FALSE; }
 
-"//".* { return TOK_IGNORED; }
+"//".* {}
 
-";" { return TOK_PUNTOYCOMA; }
-"," { return TOK_COMA; }
-"(" { return TOK_PARENTESISIZQUIERDO; }
-")" { return TOK_PARENTESISDERECHO; }
-"[" { return TOK_CORCHETEIZQUIERDO; }
-"]" { return TOK_CORCHETEDERECHO; }
-"{" { return TOK_LLAVEIZQUIERDA; }
-"}" { return TOK_LLAVEDERECHA; }
-"=" { return TOK_ASIGNACION; }
-"+" { return TOK_MAS; }
-"-" { return TOK_MENOS; }
-"/" { return TOK_DIVISION; }
-"*" { return TOK_ASTERISCO; }
-"&&" { return TOK_AND; }
-"||" { return TOK_OR; }
-"!" { return TOK_NOT; }
-"==" { return TOK_IGUAL; }
-"!=" { return TOK_DISTINTO; }
-"<=" { return TOK_MENORIGUAL; }
-">=" { return TOK_MAYORIGUAL; }
-"<" { return TOK_MENOR; }
-">" { return TOK_MAYOR; }
+";" { fprintf(yyout, ";D:\t;\n"); return TOK_PUNTOYCOMA; }
+"," { fprintf(yyout, ";D:\t,\n"); return TOK_COMA; }
+"(" { fprintf(yyout, ";D:\t(\n"); return TOK_PARENTESISIZQUIERDO; }
+")" { fprintf(yyout, ";D:\t)\n"); return TOK_PARENTESISDERECHO; }
+"[" { fprintf(yyout, ";D:\t[\n"); return TOK_CORCHETEIZQUIERDO; }
+"]" { fprintf(yyout, ";D:\t]\n"); return TOK_CORCHETEDERECHO; }
+"{" { fprintf(yyout, ";D:\t{\n"); return TOK_LLAVEIZQUIERDA; }
+"}" { fprintf(yyout, ";D:\t}\n"); return TOK_LLAVEDERECHA; }
+"=" { fprintf(yyout, ";D:\t=\n"); return TOK_ASIGNACION; }
+"+" { fprintf(yyout, ";D:\t+\n"); return TOK_MAS; }
+"-" { fprintf(yyout, ";D:\t-");return TOK_MENOS; }
+"/" { fprintf(yyout, ";D:\t/\n"); return TOK_DIVISION; }
+"*" { fprintf(yyout, ";D:\t*\n"); return TOK_ASTERISCO; }
+"&&" { fprintf(yyout, ";D:\t&&\n"); return TOK_AND; }
+"||" { fprintf(yyout, ";D:\t||\n"); return TOK_OR; }
+"!" { fprintf(yyout, ";D:\t!\n"); return TOK_NOT; }
+"==" { fprintf(yyout, ";D:\t==\n"); return TOK_IGUAL; }
+"!=" { fprintf(yyout, ";D:\t!=\n"); return TOK_DISTINTO; }
+"<=" { fprintf(yyout, ";D:\t<=\n"); return TOK_MENORIGUAL; }
+">=" { fprintf(yyout, ">=\n"); return TOK_MAYORIGUAL; }
+"<" { fprintf(yyout, "<\n"); return TOK_MENOR; }
+">" { fprintf(yyout, ">\n"); return TOK_MAYOR; }
 
-[a-zA-Z][0-9a-zA-Z]* { return TOK_IDENTIFICADOR; }
+[a-zA-Z][0-9a-zA-Z]* { fprintf(yyout, ";D:\t%s\n", yytext); return TOK_IDENTIFICADOR; }
 
-[0-9]+ { return TOK_CONSTANTE_ENTERA; }
+[0-9]+ { fprintf(yyout, ";D:\t%s\n", yytext); return TOK_CONSTANTE_ENTERA; }
 
-[ \t] { return TOK_IGNORED; }
+[ \t] {}
 
-[\n] { return TOK_SALTOLINEA;}
+[\n] {}
 
-. { return TOK_ERROR; }
+. {return TOK_ERROR; }
 
 %%

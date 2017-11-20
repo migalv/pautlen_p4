@@ -100,7 +100,7 @@ declaraciones_funcion: 	  declaraciones {fprintf(yyout , ";R28:\t<declaraciones_
 						| /* vacio */ {fprintf(yyout , ";R29:\t<declaraciones_funcion> ::=\n");};
 
 sentencias: 	  sentencia {fprintf(yyout , ";R30:\t<sentencias> ::= <sentencia>\n");}
-				| sentencia sentencias {fprintf(yyout , ";R31\t<sentencias> ::= <sentencia> <sentencias>\n");};
+				| sentencia sentencias {fprintf(yyout , ";R31:\t<sentencias> ::= <sentencia> <sentencias>\n");};
 
 sentencia: 	  sentencia_simple TOK_PUNTOYCOMA {fprintf(yyout , ";R32:\t<sentencia> ::= <sentencia_simple> ;\n");}
 			| bloque {fprintf(yyout , ";R33:\t<sentencia> ::= <bloque>\n");};
@@ -113,8 +113,8 @@ sentencia_simple: 	  asignacion {fprintf(yyout , ";R34:\t<sentencia_simple> ::= 
 bloque:   condicional {fprintf(yyout , ";R40:\t<bloque> ::= <condicional>\n");}
 		| bucle {fprintf(yyout , ";R41:\t<bloque> ::= <bucle>\n");};
 
-asignacion:	  identificador TOK_IGUAL exp {fprintf(yyout , ";R43:\t<asignacion> ::= <identificador> = <exp>\n");}
-			| elemento_vector TOK_IGUAL exp {fprintf(yyout , ";R44:\t<asignacion> ::= <elemento_vector> = <exp>\n");};
+asignacion:	  identificador TOK_ASIGNACION exp {fprintf(yyout , ";R43:\t<asignacion> ::= <identificador> = <exp>\n");}
+			| elemento_vector TOK_ASIGNACION exp {fprintf(yyout , ";R44:\t<asignacion> ::= <elemento_vector> = <exp>\n");};
 
 elemento_vector:    identificador TOK_CORCHETEIZQUIERDO exp TOK_CORCHETEDERECHO {fprintf(yyout , ";R48:\t<elemento_vector> ::= <identificador> [ <exp> ]\n");};
 
@@ -138,33 +138,33 @@ exp:  exp TOK_MAS exp {fprintf(yyout , ";R72:\t<exp> ::= <exp> + <exp>\n");}
 	| exp TOK_OR exp {fprintf(yyout , ";R78:\t<exp> ::= <exp> || <exp>\n");}
 	| TOK_MENOS contrario exp {fprintf(yyout , ";R76:\t<exp> ::= - <exp>\n");} 
 	| TOK_NOT exp {fprintf(yyout , ";R79:\t<exp> ::= ! <exp>\n");}
-	| identificador {fprintf(yyout, ";R80:\t<exp> := <identificador>\n");}
+	| identificador {fprintf(yyout, ";R80:\t<exp> ::= <identificador>\n");}
 	| constante {fprintf(yyout, ";R81:\t<exp> ::= <constante>\n");}
 	| TOK_PARENTESISIZQUIERDO exp TOK_PARENTESISDERECHO { fprintf(yyout, ";R82:\t<exp> ::= ( <exp> )\n");}
 	| TOK_PARENTESISIZQUIERDO comparacion TOK_PARENTESISDERECHO {fprintf(yyout , ";R83:\t<exp> ::= ( <comparacion> )\n");}
 	| elemento_vector {fprintf(yyout , ";R85:\t<exp> ::= <elemento_vector>\n");}
 	| identificador TOK_PARENTESISIZQUIERDO lista_expresiones TOK_PARENTESISDERECHO {fprintf(yyout , ";R88:\t<exp> ::= <identificador> ( <lista_expresiones> )\n");};
 
-lista_expresiones: 	  exp resto_lista_expresiones {fprintf(yyout , "Ha traducido la primera linea\n");}
-					| /* vacio */ {fprintf(yyout , "Ha traducido la primera linea\n");};
+lista_expresiones: 	  exp resto_lista_expresiones {fprintf(yyout , ";R89:\t<lista_expresiones> ::= <exp> <resto_lista_expresiones>\n");}
+					| /* vacio */ {fprintf(yyout , ";R90:\t<lista_expresiones> ::=\n");};
 
-resto_lista_expresiones:	  TOK_COMA exp resto_lista_expresiones {fprintf(yyout , "Ha traducido la primera linea\n");}
-							|  /* vacio */ {fprintf(yyout , "Ha traducido la primera linea\n");};
+resto_lista_expresiones:	  TOK_COMA exp resto_lista_expresiones {fprintf(yyout , ";R91:\t <resto_lista_expresiones> ::= , <exp> <resto_lista_expresiones>\n");}
+							|  /* vacio */ {fprintf(yyout , ";R92:\t <resto_lista_expresiones> ::=\n");};
 
-comparacion:	  exp TOK_IGUAL exp {fprintf(yyout , "Ha traducido la primera linea\n");}
-				| exp TOK_DISTINTO exp {fprintf(yyout , "Ha traducido la primera linea\n");}
-				| exp TOK_MENORIGUAL exp {fprintf(yyout , "Ha traducido la primera linea\n");}
-				| exp TOK_MAYORIGUAL exp {fprintf(yyout , "Ha traducido la primera linea\n");}
-				| exp TOK_MENOR exp {fprintf(yyout , "Ha traducido la primera linea\n");}
-				| exp TOK_MAYOR exp {fprintf(yyout , "Ha traducido la primera linea\n");};
+comparacion:	  exp TOK_IGUAL exp {fprintf(yyout , ";R93:\t<comparacion> ::= <exp> == <exp>\n");}
+				| exp TOK_DISTINTO exp {fprintf(yyout , ";R94:\t<comparacion> ::= <exp> != <exp>\n");}
+				| exp TOK_MENORIGUAL exp {fprintf(yyout , ";R95:\t<comparacion> ::= <exp> <= <exp>\n");}
+				| exp TOK_MAYORIGUAL exp {fprintf(yyout , ";R96:\t<comparacion> ::= <exp> >= <exp>\n");}
+				| exp TOK_MENOR exp {fprintf(yyout , ";R97:\t<comparacion> ::= <exp> < <exp>\n");}
+				| exp TOK_MAYOR exp {fprintf(yyout , ";R98:\t<comparacion> ::= <exp> > <exp>\n");};
 
-constante:	  constante_logica {fprintf(yyout , "Ha traducido la primera linea\n");}
-			| constante_entera {fprintf(yyout , "Ha traducido la primera linea\n");};
+constante:	  constante_logica {fprintf(yyout , ";R99:\t<constante> ::= <constante_logica>\n");}
+			| constante_entera {fprintf(yyout , ";R100:\t<constante> ::= <constante_logica>\n");};
 
-constante_logica:	  TOK_TRUE {fprintf(yyout , "Ha traducido la primera linea\n");}
-					| TOK_FALSE {fprintf(yyout , "Ha traducido la primera linea\n");};
+constante_logica:	  TOK_TRUE {fprintf(yyout , ";R102:\t<constante_logica> ::= true\n");}
+					| TOK_FALSE {fprintf(yyout , ";R103:\t<constante_logica> ::= false\n");};
 
-constante_entera:	  TOK_CONSTANTE_ENTERA {fprintf(yyout , "Ha traducido la primera linea\n");};
+constante_entera:	  TOK_CONSTANTE_ENTERA {fprintf(yyout , ";R104:\t<constante_entera> ::= TOK_CONSTANTE_ENTERA\n");};
 
-identificador:	TOK_IDENTIFICADOR {fprintf(yyout , "Ha traducido la primera linea\n");};
+identificador:	TOK_IDENTIFICADOR {fprintf(yyout , ";R108:\t<identificador> ::= TOK_IDENTIFICADOR\n");};
 %%

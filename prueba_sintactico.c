@@ -4,13 +4,16 @@
 
 extern FILE *yyin, *yyout;
 extern int yyparse (void);
+extern int cont_lineas;
+extern int cont_column;
+extern int flag_morfologico;
 
 void yyerror(char *s);
 
 int main(int argc, char * argv[]){
 	int resultado = 0;
 	if(argc != 3){
-		printf("Error con los parámetros. Pruebe con %s <archivo_entrada> <archivo_salida>", argv[0]);
+		printf("Error con los parámetros. Pruebe con %s <archivo_entrada> <archivo_salida> \n", argv[0]);
 		exit(1);
 	}
 
@@ -39,6 +42,6 @@ int main(int argc, char * argv[]){
 }
 
 void yyerror(char *s){
-	if(!s) return;
-	printf("Error: %s\n", s);
+	if(flag_morfologico == 0)
+		printf("****Error sintactico en [lin %d, col %d]\n", cont_lineas, cont_column);
 }
